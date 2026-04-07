@@ -89,6 +89,67 @@
             transition: background 0.2s;
         }
         .cta:hover { background: #4f46e5; }
+        .about {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto 4rem auto;
+            padding: 0 2rem;
+        }
+        .about h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        .founder-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        .founder-card .name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .founder-card .title {
+            font-size: 0.9rem;
+            color: #818cf8;
+            font-weight: 600;
+        }
+        .founder-card .bio {
+            font-size: 0.95rem;
+            color: #9ca3af;
+            line-height: 1.6;
+        }
+        .founder-card .links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .founder-card .links a {
+            color: #a5b4fc;
+            text-decoration: none;
+            font-size: 0.9rem;
+            border: 1px solid rgba(99,102,241,0.3);
+            padding: 0.35rem 0.8rem;
+            border-radius: 6px;
+            transition: border-color 0.2s;
+        }
+        .founder-card .links a:hover { border-color: #818cf8; }
+        .company-info {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: #6b7280;
+        }
+        .company-info span {
+            color: #9ca3af;
+        }
         .footer {
             text-align: center;
             padding: 2rem;
@@ -153,8 +214,31 @@
         </div>
         <a href="mailto:george@netralis.ca" class="cta">Get in Touch →</a>
     </div>
+
+    <section class="about">
+        <h2>About</h2>
+        <div class="founder-card">
+            <div class="name">George Guo</div>
+            <div class="title">Founder &amp; Engineer · Netralis Inc.</div>
+            <p class="bio">
+                Software engineer with 15 years of experience, including 10 years at Ant Group (Alipay) — 
+                one of the world's largest fintech platforms. Based in Edmonton, Canada, George founded 
+                Netralis Inc. in 2026 to bring AI-native intelligence to the edge computing layer, 
+                making LLMs accessible on low-cost microcontrollers.
+            </p>
+            <div class="links">
+                <a href="https://www.linkedin.com/in/george-guo-2625a01aa/" target="_blank" rel="noopener">LinkedIn ↗</a>
+                <a href="https://github.com/netralis-inc" target="_blank" rel="noopener">GitHub ↗</a>
+                <a href="mailto:george@netralis.ca">george@netralis.ca</a>
+            </div>
+        </div>
+        <div class="company-info">
+            <span>Netralis Inc.</span> · Incorporated in Canada · Edmonton, Alberta · <span>Seed Stage</span>
+        </div>
+    </section>
+
     <div class="footer">
-        © 2026 Netralis Inc. · Edmonton, Canada
+        © 2026 Netralis Inc. · Edmonton, Alberta, Canada · george@netralis.ca
     </div>
 </body>
 </html>
