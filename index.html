@@ -721,6 +721,147 @@
     }
 
     /* ═══════════════════════════════════════════════════
+       CLOUD (Built on GCP)
+       ═══════════════════════════════════════════════════ */
+    #cloud { background: transparent; }
+    .gcp-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .gcp-card {
+      position: relative;
+      padding: 1.6rem 1.55rem 1.7rem;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.032), rgba(255,255,255,.01));
+      border: 1px solid var(--line);
+      transition: border-color .25s var(--ease), transform .25s var(--ease), background .25s var(--ease);
+      overflow: hidden;
+    }
+    .gcp-card:hover {
+      border-color: rgba(167,139,250,.3);
+      transform: translateY(-3px);
+      background: linear-gradient(180deg, rgba(167,139,250,.045), rgba(255,255,255,.012));
+    }
+    .gcp-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan), 0 0 16px var(--cyan);
+      margin-bottom: 1.1rem;
+    }
+    .gcp-svc {
+      font-family: var(--mono);
+      font-size: .65rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--t-4);
+      margin-bottom: .35rem;
+    }
+    .gcp-name {
+      font-family: var(--display);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--t-0);
+      margin-bottom: .55rem;
+      letter-spacing: -.012em;
+    }
+    .gcp-use {
+      font-size: .85rem;
+      color: var(--t-2);
+      line-height: 1.6;
+    }
+    .gcp-note {
+      margin-top: 2rem;
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--t-3);
+      letter-spacing: .03em;
+      display: flex; align-items: center; gap: .55rem;
+    }
+    .gcp-note::before {
+      content: '';
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan);
+    }
+
+    /* ═══════════════════════════════════════════════════
+       ROADMAP
+       ═══════════════════════════════════════════════════ */
+    #roadmap { background: transparent; }
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      position: relative;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 18px; left: 8%; right: 8%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line-2) 10%, var(--line-2) 90%, transparent);
+      pointer-events: none;
+    }
+    .tl-item {
+      position: relative;
+      padding: 0 .25rem;
+    }
+    .tl-marker {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--bg-1);
+      border: 1px solid var(--line-2);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.25rem;
+      position: relative;
+      z-index: 1;
+      transition: border-color .3s var(--ease), box-shadow .3s var(--ease);
+    }
+    .tl-marker::after {
+      content: '';
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--violet);
+      box-shadow: 0 0 8px var(--violet), 0 0 16px var(--violet);
+    }
+    .tl-item.done .tl-marker {
+      border-color: rgba(34,211,238,.5);
+      box-shadow: 0 0 0 4px rgba(34,211,238,.06);
+    }
+    .tl-item.done .tl-marker::after {
+      background: var(--cyan);
+      box-shadow: 0 0 8px var(--cyan), 0 0 16px var(--cyan);
+    }
+    .tl-item.next .tl-marker {
+      border-color: rgba(167,139,250,.55);
+      box-shadow: 0 0 0 4px rgba(167,139,250,.08);
+    }
+    .tl-q {
+      font-family: var(--mono);
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--violet);
+      margin-bottom: .5rem;
+    }
+    .tl-item.done .tl-q { color: var(--cyan); }
+    .tl-title {
+      font-family: var(--display);
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--t-0);
+      margin-bottom: .55rem;
+      letter-spacing: -.012em;
+      line-height: 1.25;
+    }
+    .tl-desc {
+      font-size: .85rem;
+      color: var(--t-2);
+      line-height: 1.6;
+    }
+
+    /* ═══════════════════════════════════════════════════
        CONTACT
        ═══════════════════════════════════════════════════ */
     #contact { text-align: center; padding-top: 6rem; padding-bottom: 7.5rem; }
@@ -771,6 +912,91 @@
       max-width: 460px;
       margin-left: auto; margin-right: auto;
     }
+
+    /* Form */
+    .waitlist {
+      max-width: 460px;
+      margin: 0 auto;
+      display: flex;
+      gap: .55rem;
+      flex-wrap: wrap;
+    }
+    .waitlist input[type="email"] {
+      flex: 1 1 220px;
+      min-width: 0;
+      padding: .85rem 1.1rem;
+      border-radius: 10px;
+      background: rgba(0,0,0,.35);
+      border: 1px solid var(--line-2);
+      color: var(--t-0);
+      font-family: var(--display);
+      font-size: .92rem;
+      outline: none;
+      transition: border-color .2s var(--ease), background .2s var(--ease), box-shadow .2s var(--ease);
+    }
+    .waitlist input[type="email"]::placeholder {
+      color: var(--t-3);
+    }
+    .waitlist input[type="email"]:focus {
+      border-color: rgba(167,139,250,.55);
+      background: rgba(0,0,0,.5);
+      box-shadow: 0 0 0 3px rgba(167,139,250,.12);
+    }
+    .waitlist button {
+      padding: .85rem 1.55rem;
+      border-radius: 10px;
+      background: linear-gradient(180deg, var(--violet-2), var(--violet-3));
+      color: #fff;
+      font-family: var(--display);
+      font-size: .92rem;
+      font-weight: 500;
+      letter-spacing: -.005em;
+      box-shadow:
+        0 1px 0 rgba(255,255,255,.22) inset,
+        0 0 0 1px rgba(167,139,250,.4),
+        0 12px 32px -10px rgba(139,92,246,.65);
+      transition: transform .15s var(--ease), box-shadow .25s var(--ease);
+    }
+    .waitlist button:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        0 1px 0 rgba(255,255,255,.28) inset,
+        0 0 0 1px rgba(167,139,250,.55),
+        0 18px 40px -10px rgba(139,92,246,.85);
+    }
+    .waitlist .err {
+      flex-basis: 100%;
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: #fca5a5;
+      text-align: left;
+      padding: .25rem .25rem 0;
+      min-height: 1em;
+    }
+    .waitlist.success input,
+    .waitlist.success button { display: none; }
+    .waitlist-success {
+      display: none;
+      font-family: var(--mono);
+      font-size: .82rem;
+      color: var(--cyan);
+      letter-spacing: .03em;
+      padding: .85rem 1.1rem;
+      border: 1px solid rgba(34,211,238,.35);
+      border-radius: 10px;
+      background: rgba(34,211,238,.05);
+    }
+    .waitlist.success ~ .waitlist-success { display: block; }
+
+    .contact-alt {
+      margin-top: 1.5rem;
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--t-3);
+      letter-spacing: .04em;
+    }
+    .contact-alt a { color: var(--violet); }
+    .contact-alt a:hover { color: #c4b5fd; }
 
     /* ═══════════════════════════════════════════════════
        FOOTER
@@ -830,10 +1056,15 @@
       .b1, .b2, .b3, .b4 { grid-column: span 2; }
       .about-grid { grid-template-columns: 1fr; gap: 2.75rem; }
       .founder-card { padding: 2rem 1.75rem; }
+      .gcp-grid { grid-template-columns: 1fr 1fr; }
+      .timeline { grid-template-columns: 1fr 1fr; gap: 2rem 1rem; }
+      .timeline::before { display: none; }
     }
     @media (max-width: 640px) {
       .nav-inner { height: 58px; }
       .nav-links li:not(:last-child) { display: none; }
+      .gcp-grid { grid-template-columns: 1fr; }
+      .timeline { grid-template-columns: 1fr; gap: 1.25rem; }
       .stats { padding: 2.75rem var(--gutter); }
       .stats-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem 0; }
       .stat:nth-child(3)::before { display: none; }
@@ -865,6 +1096,7 @@
     </a>
     <ul class="nav-links">
       <li><a href="#features">Platform</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#contact" class="nav-cta">Contact →</a></li>
     </ul>
@@ -878,9 +1110,9 @@
   <div class="hero-inner">
     <div class="status" role="status">
       <span class="dot" aria-hidden="true"></span>
-      <span>SYS_v0.1</span>
+      <span>PRIVATE BETA</span>
       <span class="sep">·</span>
-      <span class="ok">STATUS: BUILDING</span>
+      <span class="ok">2026 · FOUNDER-LED</span>
     </div>
 
     <h1 id="hero-heading">
@@ -1008,12 +1240,90 @@
   </div>
 </section>
 
+<!-- ═══════════════════ CLOUD ═══════════════════ -->
+<section id="cloud" class="sec" aria-labelledby="cloud-heading">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="eyebrow">Cloud Infrastructure</p>
+      <h2 id="cloud-heading" class="sec-h">Built on Google Cloud</h2>
+      <p class="sec-p">Netralis's cloud layer runs end-to-end on Google Cloud — from large-model inference to device fleet telemetry — so we focus on the edge while Google handles the planet-scale plumbing.</p>
+    </header>
+
+    <div class="gcp-grid reveal">
+      <div class="gcp-card">
+        <div class="gcp-dot" aria-hidden="true"></div>
+        <div class="gcp-svc">Vertex AI · Gemini</div>
+        <div class="gcp-name">Cloud LLM Inference</div>
+        <div class="gcp-use">Gemini Flash handles complex queries that exceed on-device model capacity. Streaming responses keep latency under 800 ms for voice.</div>
+      </div>
+      <div class="gcp-card">
+        <div class="gcp-dot" aria-hidden="true"></div>
+        <div class="gcp-svc">Pub/Sub · IoT Core</div>
+        <div class="gcp-name">Device Fleet Messaging</div>
+        <div class="gcp-use">Bidirectional messaging for OTA updates, agent deployments, and remote configuration across millions of low-power microcontrollers.</div>
+      </div>
+      <div class="gcp-card">
+        <div class="gcp-dot" aria-hidden="true"></div>
+        <div class="gcp-svc">Firebase Auth</div>
+        <div class="gcp-name">Identity &amp; Provisioning</div>
+        <div class="gcp-use">Developer accounts, device identity, and end-user pairing — with secure enrollment flows for both consumer and enterprise hardware.</div>
+      </div>
+      <div class="gcp-card">
+        <div class="gcp-dot" aria-hidden="true"></div>
+        <div class="gcp-svc">BigQuery</div>
+        <div class="gcp-name">Telemetry &amp; Routing</div>
+        <div class="gcp-use">Aggregated, privacy-preserving usage signals feed back into the routing layer to continuously improve local-vs-cloud decisions.</div>
+      </div>
+    </div>
+
+    <p class="gcp-note">Applying to Google for Startups Cloud Program · 2026</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ ROADMAP ═══════════════════ -->
+<section id="roadmap" class="sec" aria-labelledby="roadmap-heading">
+  <div class="wrap">
+    <header class="sec-head reveal">
+      <p class="eyebrow">Roadmap</p>
+      <h2 id="roadmap-heading" class="sec-h">What's shipping when</h2>
+      <p class="sec-p">Concrete, dated milestones from private SDK to commercial release. Updated as we ship.</p>
+    </header>
+
+    <div class="timeline reveal">
+      <div class="tl-item done">
+        <div class="tl-marker" aria-hidden="true"></div>
+        <div class="tl-q">Q1 2026 · Done</div>
+        <div class="tl-title">Incorporation &amp; Architecture</div>
+        <div class="tl-desc">Netralis Inc. incorporated in Canada. Hardware abstraction layer and routing protocol designed.</div>
+      </div>
+      <div class="tl-item next">
+        <div class="tl-marker" aria-hidden="true"></div>
+        <div class="tl-q">Q2 2026 · In Progress</div>
+        <div class="tl-title">Private SDK Alpha</div>
+        <div class="tl-desc">ESP32-S3 baseline, voice pipeline (ASR + LLM + TTS), MCP runtime stub, OTA updates over Pub/Sub.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-marker" aria-hidden="true"></div>
+        <div class="tl-q">Q3 2026 · Planned</div>
+        <div class="tl-title">Developer Dev Kit</div>
+        <div class="tl-desc">Reference hardware kit, onboarding flow, and open enrollment for the first 50 external developers.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-marker" aria-hidden="true"></div>
+        <div class="tl-q">Q4 2026 · Planned</div>
+        <div class="tl-title">Public Beta</div>
+        <div class="tl-desc">Cross-chip support (ESP32-C3 + P4), MCP agent marketplace, public docs, and open waitlist conversion.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══════════════════ ABOUT ═══════════════════ -->
 <section id="about" class="sec" aria-labelledby="about-heading">
   <div class="wrap">
     <header class="sec-head reveal">
-      <p class="eyebrow">The Team</p>
-      <h2 id="about-heading" class="sec-h">Built by engineers who've<br>done it at scale</h2>
+      <p class="eyebrow">Founder</p>
+      <h2 id="about-heading" class="sec-h">Built by a founder who's<br>done it at scale</h2>
     </header>
 
     <div class="about-grid">
@@ -1081,10 +1391,22 @@
 <section id="contact" class="sec" aria-labelledby="contact-heading">
   <div class="wrap">
     <div class="contact-card reveal">
-      <p class="eyebrow">Get in touch</p>
-      <h3 id="contact-heading">Let's build together</h3>
-      <p>Interested in partnering, investing, or bringing Netralis to your hardware? We'd love to hear from you.</p>
-      <a href="mailto:george@netralis.ca" class="btn btn-primary">george@netralis.ca →</a>
+      <p class="eyebrow">Early Access</p>
+      <h3 id="contact-heading">Join the waitlist</h3>
+      <p>Building on ESP32 hardware? Investing in edge AI? Drop your email — we'll reach out when the SDK alpha opens in Q2 2026.</p>
+
+      <form class="waitlist" id="waitlist-form" novalidate>
+        <input type="email" id="waitlist-email" name="email" placeholder="you@company.com" autocomplete="email" required aria-label="Email address" />
+        <button type="submit">Request access →</button>
+        <div class="err" id="waitlist-err" aria-live="polite"></div>
+      </form>
+      <div class="waitlist-success" role="status">
+        ✓ THANKS — YOUR EMAIL CLIENT SHOULD OPEN. REPLY TO CONFIRM.
+      </div>
+
+      <div class="contact-alt">
+        OR EMAIL DIRECTLY · <a href="mailto:george@netralis.ca">GEORGE@NETRALIS.CA</a>
+      </div>
     </div>
   </div>
 </section>
@@ -1099,7 +1421,11 @@
       © <span id="year">2026</span> NETRALIS INC.
     </div>
     <div>EDMONTON · ALBERTA · CANADA</div>
-    <div><a href="mailto:george@netralis.ca">GEORGE@NETRALIS.CA</a></div>
+    <div>
+      <a href="/privacy.html">PRIVACY</a> &nbsp;·&nbsp;
+      <a href="/terms.html">TERMS</a> &nbsp;·&nbsp;
+      <a href="mailto:george@netralis.ca">CONTACT</a>
+    </div>
   </div>
 </footer>
 
@@ -1132,6 +1458,30 @@
 
   // Auto year
   document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Waitlist form — opens user's mail client with prefilled body
+  const form = document.getElementById('waitlist-form');
+  const errEl = document.getElementById('waitlist-err');
+  const emailEl = document.getElementById('waitlist-email');
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = emailEl.value.trim();
+      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!valid) {
+        errEl.textContent = '› ENTER A VALID EMAIL ADDRESS';
+        emailEl.focus();
+        return;
+      }
+      errEl.textContent = '';
+      const subject = encodeURIComponent('Netralis · Early Access Request');
+      const body = encodeURIComponent(
+        `Hi George,\n\nI'd like to join the Netralis early-access waitlist.\n\nEmail: ${email}\n\n— sent from netralis.ca`
+      );
+      window.location.href = `mailto:george@netralis.ca?subject=${subject}&body=${body}`;
+      form.classList.add('success');
+    });
+  }
 </script>
 
 </body>
