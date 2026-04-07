@@ -4,58 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Netralis — AI-Native OS for Edge Devices</title>
+    <meta name="description" content="Netralis brings large language models to $10 microcontrollers. Build intelligent voice assistants and AI companions on ESP32 hardware.">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a0a;
-            color: #e0e0e0;
+            background: #060608;
+            color: #e2e8f0;
+            overflow-x: hidden;
         }
 
-        /* ── NAV ── */
+        /* ─── NAV ─── */
         nav {
             position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
+            top: 0; left: 0; right: 0; z-index: 200;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1rem 2.5rem;
-            background: rgba(10,10,10,0.85);
-            backdrop-filter: blur(12px);
+            padding: 0 2.5rem;
+            height: 64px;
+            background: rgba(6,6,8,0.8);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255,255,255,0.06);
         }
         .nav-logo {
-            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.05rem;
             font-weight: 700;
-            letter-spacing: 0.25em;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-            color: #818cf8;
+            color: #fff;
+            text-decoration: none;
         }
+        .nav-logo .bolt { color: #7c3aed; }
         .nav-links {
             display: flex;
-            gap: 2rem;
+            align-items: center;
+            gap: 0.25rem;
             list-style: none;
         }
         .nav-links a {
-            color: #9ca3af;
+            color: #94a3b8;
             text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-        .nav-links a:hover { color: #fff; }
-        .nav-cta {
-            padding: 0.5rem 1.2rem;
-            background: #6366f1;
-            color: #fff !important;
+            font-size: 0.875rem;
+            padding: 0.4rem 0.9rem;
             border-radius: 6px;
-            font-weight: 600 !important;
-            font-size: 0.85rem !important;
+            transition: color 0.2s, background 0.2s;
         }
-        .nav-cta:hover { background: #4f46e5; color: #fff !important; }
+        .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.06); }
+        .nav-links .btn {
+            background: #7c3aed;
+            color: #fff !important;
+            padding: 0.45rem 1.1rem;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .nav-links .btn:hover { background: #6d28d9 !important; }
 
-        /* ── HERO ── */
+        /* ─── HERO ─── */
         #home {
             min-height: 100vh;
             display: flex;
@@ -63,243 +73,366 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 8rem 2rem 4rem;
-            background: radial-gradient(ellipse at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+            padding: 7rem 1.5rem 5rem;
+            position: relative;
+            overflow: hidden;
         }
-        .badge {
-            display: inline-block;
+        .hero-glow {
+            position: absolute;
+            top: -200px; left: 50%;
+            transform: translateX(-50%);
+            width: 900px; height: 600px;
+            background: radial-gradient(ellipse, rgba(124,58,237,0.18) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 60px 60px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+            pointer-events: none;
+        }
+        .pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
             padding: 0.35rem 1rem;
-            background: rgba(99,102,241,0.12);
-            border: 1px solid rgba(99,102,241,0.3);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: #a5b4fc;
-            letter-spacing: 0.05em;
-            margin-bottom: 1.5rem;
+            background: rgba(124,58,237,0.12);
+            border: 1px solid rgba(124,58,237,0.35);
+            border-radius: 100px;
+            font-size: 0.78rem;
+            color: #c4b5fd;
+            letter-spacing: 0.04em;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        .pill-dot {
+            width: 6px; height: 6px;
+            background: #7c3aed;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.4); }
         }
         h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-size: clamp(2.8rem, 7vw, 5rem);
             font-weight: 800;
-            line-height: 1.1;
+            line-height: 1.08;
+            letter-spacing: -0.02em;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #fff 0%, #818cf8 100%);
+            position: relative;
+        }
+        h1 .line1 { color: #fff; display: block; }
+        h1 .line2 {
+            display: block;
+            background: linear-gradient(90deg, #7c3aed 0%, #a78bfa 50%, #38bdf8 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .subtitle {
-            font-size: clamp(1rem, 2.5vw, 1.25rem);
-            color: #9ca3af;
-            max-width: 620px;
-            line-height: 1.7;
+        .hero-sub {
+            font-size: clamp(1rem, 2.2vw, 1.2rem);
+            color: #94a3b8;
+            max-width: 580px;
+            line-height: 1.75;
             margin-bottom: 2.5rem;
-        }
-        .stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            justify-content: center;
-            margin-bottom: 2.5rem;
-        }
-        .tag {
-            padding: 0.4rem 0.9rem;
-            background: rgba(99, 102, 241, 0.1);
-            border: 1px solid rgba(99, 102, 241, 0.2);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: #a5b4fc;
+            position: relative;
         }
         .hero-btns {
             display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
+            gap: 0.75rem;
             justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3.5rem;
+            position: relative;
         }
-        .btn-primary {
-            display: inline-block;
-            padding: 0.85rem 2rem;
-            background: #6366f1;
+        .btn-purple {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.75rem 1.75rem;
+            background: #7c3aed;
             color: #fff;
             text-decoration: none;
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.95rem;
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.15s;
+            box-shadow: 0 0 24px rgba(124,58,237,0.35);
         }
-        .btn-primary:hover { background: #4f46e5; }
-        .btn-secondary {
-            display: inline-block;
-            padding: 0.85rem 2rem;
-            background: transparent;
-            color: #a5b4fc;
+        .btn-purple:hover { background: #6d28d9; transform: translateY(-1px); }
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.75rem 1.75rem;
+            background: rgba(255,255,255,0.05);
+            color: #cbd5e1;
             text-decoration: none;
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.95rem;
-            border: 1px solid rgba(99,102,241,0.35);
-            transition: border-color 0.2s;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: background 0.2s, border-color 0.2s;
         }
-        .btn-secondary:hover { border-color: #818cf8; color: #c7d2fe; }
+        .btn-ghost:hover { background: rgba(255,255,255,0.09); border-color: rgba(255,255,255,0.2); }
 
-        /* ── SECTIONS SHARED ── */
-        section {
-            padding: 6rem 2rem;
+        /* ─── CODE DEMO ─── */
+        .code-demo {
+            position: relative;
+            width: 100%;
+            max-width: 640px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 14px;
+            overflow: hidden;
+            text-align: left;
         }
-        .section-inner {
-            max-width: 960px;
-            margin: 0 auto;
+        .code-demo-bar {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1rem;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
         }
-        .section-label {
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot.r { background: #ff5f57; }
+        .dot.y { background: #ffbd2e; }
+        .dot.g { background: #28c840; }
+        .code-demo-bar .filename {
+            margin-left: auto;
             font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            color: #818cf8;
-            margin-bottom: 0.75rem;
+            color: #64748b;
+            font-family: 'SF Mono', 'Fira Code', monospace;
         }
-        .section-title {
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 1rem;
+        .code-body {
+            padding: 1.25rem 1.5rem;
+            font-family: 'SF Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: 0.82rem;
+            line-height: 1.8;
+            color: #94a3b8;
         }
-        .section-sub {
-            font-size: 1rem;
-            color: #9ca3af;
-            max-width: 560px;
-            line-height: 1.6;
-            margin-bottom: 3rem;
-        }
+        .code-body .kw { color: #c084fc; }
+        .code-body .fn { color: #38bdf8; }
+        .code-body .str { color: #86efac; }
+        .code-body .cm { color: #475569; }
+        .code-body .num { color: #fb923c; }
 
-        /* ── FEATURES ── */
-        #features {
-            background: rgba(255,255,255,0.01);
+        /* ─── STATS ─── */
+        .stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 4rem 2rem;
             border-top: 1px solid rgba(255,255,255,0.05);
             border-bottom: 1px solid rgba(255,255,255,0.05);
         }
+        .stat-item { text-align: center; }
+        .stat-item .num {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+        .stat-item .num span { color: #7c3aed; }
+        .stat-item .label { font-size: 0.85rem; color: #64748b; margin-top: 0.2rem; }
+
+        /* ─── SECTION SHARED ─── */
+        section.padded { padding: 6rem 1.5rem; }
+        .inner { max-width: 1000px; margin: 0 auto; }
+        .eyebrow {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #7c3aed;
+            margin-bottom: 0.75rem;
+        }
+        .sec-title {
+            font-size: clamp(1.75rem, 4vw, 2.6rem);
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            line-height: 1.15;
+        }
+        .sec-sub {
+            font-size: 1rem;
+            color: #94a3b8;
+            max-width: 520px;
+            line-height: 1.7;
+            margin-bottom: 3rem;
+        }
+
+        /* ─── FEATURES ─── */
+        #features { background: rgba(255,255,255,0.01); }
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 1.25rem;
         }
-        .feature {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
+        .feat-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 14px;
+            padding: 1.75rem;
+            transition: border-color 0.25s, background 0.25s;
+        }
+        .feat-card:hover {
+            border-color: rgba(124,58,237,0.35);
+            background: rgba(124,58,237,0.05);
+        }
+        .feat-icon {
+            width: 44px; height: 44px;
+            background: rgba(124,58,237,0.12);
+            border: 1px solid rgba(124,58,237,0.2);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        .feat-card h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+        .feat-card p { font-size: 0.875rem; color: #94a3b8; line-height: 1.65; }
+
+        /* ─── ABOUT ─── */
+        #about { background: #060608; }
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+        .about-left .big-name {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+        .about-left .role {
+            font-size: 0.9rem;
+            color: #7c3aed;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+        }
+        .about-left .bio {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            line-height: 1.8;
+            margin-bottom: 1.75rem;
+        }
+        .about-links {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 2.5rem;
+        }
+        .about-links a {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #a78bfa;
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.45rem 1rem;
+            border-radius: 7px;
+            border: 1px solid rgba(124,58,237,0.3);
+            transition: all 0.2s;
+        }
+        .about-links a:hover { border-color: #7c3aed; background: rgba(124,58,237,0.08); color: #c4b5fd; }
+        .cred-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+        .cred-list li {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+        }
+        .cred-list li::before {
+            content: '';
+            width: 8px; height: 8px;
+            background: #7c3aed;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .about-right {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .info-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
             border-radius: 12px;
             padding: 1.5rem;
         }
-        .feature .icon { font-size: 1.8rem; margin-bottom: 0.8rem; }
-        .feature h3 { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 0.4rem; }
-        .feature p { font-size: 0.9rem; color: #9ca3af; line-height: 1.5; }
-
-        /* ── ABOUT ── */
-        #about { background: #0a0a0a; }
-        .founder-card {
-            display: flex;
-            gap: 2.5rem;
-            align-items: flex-start;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px;
-            padding: 2.5rem;
-        }
-        .founder-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #6366f1, #818cf8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            flex-shrink: 0;
-        }
-        .founder-info .name {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 0.2rem;
-        }
-        .founder-info .title {
-            font-size: 0.9rem;
-            color: #818cf8;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        .founder-info .bio {
-            font-size: 0.95rem;
-            color: #9ca3af;
-            line-height: 1.7;
-            margin-bottom: 1.2rem;
-        }
-        .founder-links {
-            display: flex;
-            gap: 0.8rem;
-            flex-wrap: wrap;
-        }
-        .founder-links a {
-            color: #a5b4fc;
-            text-decoration: none;
-            font-size: 0.875rem;
-            border: 1px solid rgba(99,102,241,0.3);
-            padding: 0.35rem 0.9rem;
-            border-radius: 6px;
-            transition: border-color 0.2s, color 0.2s;
-        }
-        .founder-links a:hover { border-color: #818cf8; color: #c7d2fe; }
-        .company-meta {
-            margin-top: 2rem;
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-        .meta-item {
-            display: flex;
-            flex-direction: column;
-            gap: 0.2rem;
-        }
-        .meta-item .label {
-            font-size: 0.75rem;
+        .info-card .ic-label {
+            font-size: 0.72rem;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #6b7280;
+            letter-spacing: 0.12em;
+            color: #475569;
+            margin-bottom: 0.4rem;
         }
-        .meta-item .value {
+        .info-card .ic-value {
+            font-size: 1rem;
+            color: #e2e8f0;
+            font-weight: 600;
+        }
+        .info-card .ic-sub {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 0.2rem;
+        }
+
+        /* ─── CONTACT ─── */
+        #contact { text-align: center; }
+        .contact-card {
+            max-width: 580px;
+            margin: 0 auto;
+            background: rgba(124,58,237,0.07);
+            border: 1px solid rgba(124,58,237,0.2);
+            border-radius: 20px;
+            padding: 3.5rem 2rem;
+        }
+        .contact-card h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 0.75rem;
+        }
+        .contact-card p {
             font-size: 0.95rem;
-            color: #e0e0e0;
-            font-weight: 500;
+            color: #94a3b8;
+            line-height: 1.7;
+            margin-bottom: 2rem;
         }
 
-        /* ── CONTACT ── */
-        #contact {
-            border-top: 1px solid rgba(255,255,255,0.05);
-            text-align: center;
-        }
-        #contact .section-sub { margin: 0 auto 2rem; }
-        .contact-box {
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        /* ── FOOTER ── */
+        /* ─── FOOTER ─── */
         footer {
+            padding: 2rem 1.5rem;
             text-align: center;
-            padding: 2rem;
-            color: #4b5563;
             font-size: 0.82rem;
+            color: #334155;
             border-top: 1px solid rgba(255,255,255,0.05);
         }
-        footer a { color: #6b7280; text-decoration: none; }
-        footer a:hover { color: #9ca3af; }
+        footer a { color: #475569; text-decoration: none; }
+        footer a:hover { color: #94a3b8; }
 
-        /* ── RESPONSIVE ── */
-        @media (max-width: 640px) {
-            nav { padding: 1rem 1.5rem; }
-            .nav-links { gap: 1rem; }
-            .founder-card { flex-direction: column; gap: 1.5rem; }
-            .company-meta { gap: 1rem; }
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 768px) {
+            nav { padding: 0 1.25rem; }
+            .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+            .stats { gap: 1.5rem; }
+        }
+        @media (max-width: 480px) {
+            .nav-links li:not(:last-child) { display: none; }
         }
     </style>
 </head>
@@ -307,127 +440,184 @@
 
     <!-- NAV -->
     <nav>
-        <div class="nav-logo">⚡ Netralis</div>
+        <a href="#home" class="nav-logo"><span class="bolt">⚡</span> Netralis</a>
         <ul class="nav-links">
             <li><a href="#features">Features</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#contact" class="nav-cta">Contact</a></li>
+            <li><a href="#contact" class="btn">Contact Us</a></li>
         </ul>
     </nav>
 
     <!-- HERO -->
     <section id="home">
-        <div class="badge">🚀 Seed Stage · Edmonton, Canada</div>
-        <h1>AI-Native OS<br>for Edge Devices</h1>
-        <p class="subtitle">
-            We're building the operating system layer that brings large language models 
-            to low-cost microcontrollers — enabling intelligent voice assistants, AI companions, 
-            and smart home controllers on devices that cost less than $10.
-        </p>
-        <div class="stack">
-            <span class="tag">ESP32-S3</span>
-            <span class="tag">Voice AI</span>
-            <span class="tag">MCP Protocol</span>
-            <span class="tag">Cloud LLM Inference</span>
-            <span class="tag">OTA Updates</span>
-            <span class="tag">Edge Computing</span>
+        <div class="hero-glow"></div>
+        <div class="hero-grid"></div>
+
+        <div class="pill">
+            <span class="pill-dot"></span>
+            Now in active development · Seed Stage
         </div>
+
+        <h1>
+            <span class="line1">AI on Every Device.</span>
+            <span class="line2">Even a $10 One.</span>
+        </h1>
+
+        <p class="hero-sub">
+            Netralis is the operating system layer that brings large language models 
+            to low-cost microcontrollers — voice assistants, AI companions, and 
+            smart controllers on hardware anyone can afford.
+        </p>
+
         <div class="hero-btns">
-            <a href="#features" class="btn-primary">See What We're Building</a>
-            <a href="#contact" class="btn-secondary">Get in Touch</a>
+            <a href="#features" class="btn-purple">See the Platform →</a>
+            <a href="#contact" class="btn-ghost">Get Early Access</a>
+        </div>
+
+        <!-- CODE DEMO -->
+        <div class="code-demo">
+            <div class="code-demo-bar">
+                <span class="dot r"></span>
+                <span class="dot y"></span>
+                <span class="dot g"></span>
+                <span class="filename">main.cpp · ESP32-S3</span>
+            </div>
+            <div class="code-body">
+<span class="cm">// Netralis Agent Runtime — 3 lines to a voice AI</span><br>
+<span class="kw">#include</span> <span class="str">"netralis.h"</span><br><br>
+<span class="kw">auto</span> agent = <span class="fn">NeAgent</span>(<span class="str">"home-assistant"</span>);<br>
+agent.<span class="fn">on_wake</span>(<span class="str">"hey netralis"</span>, []() {<br>
+&nbsp;&nbsp;<span class="kw">auto</span> reply = agent.<span class="fn">ask</span>(<span class="fn">mic_listen</span>());&nbsp;&nbsp;<span class="cm">// STT → LLM → TTS</span><br>
+&nbsp;&nbsp;<span class="fn">speaker_play</span>(reply);<br>
+});<br><br>
+<span class="fn">netralis_start</span>(); &nbsp;<span class="cm">// OTA, routing, cloud sync — all included</span>
+            </div>
         </div>
     </section>
 
+    <!-- STATS -->
+    <div class="stats">
+        <div class="stat-item">
+            <div class="num">&lt;<span>$10</span></div>
+            <div class="label">Target hardware cost</div>
+        </div>
+        <div class="stat-item">
+            <div class="num"><span>3</span> chips</div>
+            <div class="label">ESP32-S3 · C3 · P4</div>
+        </div>
+        <div class="stat-item">
+            <div class="num"><span>15</span>yr</div>
+            <div class="label">Engineering experience</div>
+        </div>
+        <div class="stat-item">
+            <div class="num"><span>1B+</span></div>
+            <div class="label">Users on platforms we've built</div>
+        </div>
+    </div>
+
     <!-- FEATURES -->
-    <section id="features">
-        <div class="section-inner">
-            <div class="section-label">Platform</div>
-            <h2 class="section-title">Built for the Intelligent Edge</h2>
-            <p class="section-sub">Four core capabilities that make LLMs practical on $10 hardware.</p>
+    <section id="features" class="padded">
+        <div class="inner">
+            <p class="eyebrow">Platform Capabilities</p>
+            <h2 class="sec-title">Everything the intelligent<br>edge needs</h2>
+            <p class="sec-sub">Four core layers — from hardware abstraction to cloud LLM routing — so you build the experience, not the plumbing.</p>
             <div class="features-grid">
-                <div class="feature">
-                    <div class="icon">🧠</div>
+                <div class="feat-card">
+                    <div class="feat-icon">🧠</div>
                     <h3>Intelligent Routing</h3>
-                    <p>Local models handle simple tasks; complex queries route to cloud LLMs — optimizing cost and latency.</p>
+                    <p>Local models handle simple tasks; complex queries route to cloud LLMs automatically — optimizing cost and latency in real time.</p>
                 </div>
-                <div class="feature">
-                    <div class="icon">🎤</div>
+                <div class="feat-card">
+                    <div class="feat-icon">🎤</div>
                     <h3>Voice-First Interface</h3>
-                    <p>Streaming ASR + LLM + TTS pipeline with wake-word detection, speaker recognition, and multi-language support.</p>
+                    <p>Streaming ASR + LLM + TTS pipeline with wake-word detection, speaker recognition, and multi-language support out of the box.</p>
                 </div>
-                <div class="feature">
-                    <div class="icon">🔌</div>
+                <div class="feat-card">
+                    <div class="feat-icon">🔌</div>
                     <h3>Agent Runtime</h3>
-                    <p>MCP-based agent framework lets third-party developers build AI apps that run on any Netralis-powered device.</p>
+                    <p>MCP-based agent framework lets third-party developers build AI apps that run on any Netralis-powered device — no firmware expertise required.</p>
                 </div>
-                <div class="feature">
-                    <div class="icon">📦</div>
+                <div class="feat-card">
+                    <div class="feat-icon">📦</div>
                     <h3>Hardware Abstraction</h3>
-                    <p>One OS, many chips. Supports ESP32-S3, ESP32-C3, and ESP32-P4 with unified APIs for sensors, displays, and audio.</p>
+                    <p>One OS, many chips. Supports ESP32-S3, C3, and P4 with unified APIs for sensors, displays, audio, and OTA updates.</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ABOUT -->
-    <section id="about">
-        <div class="section-inner">
-            <div class="section-label">The Team</div>
-            <h2 class="section-title">About Netralis</h2>
-            <p class="section-sub">A small team with deep roots in enterprise software and large-scale distributed systems.</p>
-            <div class="founder-card">
-                <div class="founder-avatar">👨‍💻</div>
-                <div class="founder-info">
-                    <div class="name">George Guo</div>
-                    <div class="title">Founder &amp; Engineer</div>
+    <section id="about" class="padded">
+        <div class="inner">
+            <p class="eyebrow">The Team</p>
+            <h2 class="sec-title">Built by engineers who've<br>done it at scale</h2>
+            <div class="about-grid">
+                <div class="about-left">
+                    <div class="big-name">George Guo</div>
+                    <div class="role">Founder &amp; Engineer · Netralis Inc.</div>
                     <p class="bio">
-                        15 years of software engineering experience, including 10 years at Ant Group (Alipay) — 
-                        one of the world's largest fintech platforms processing billions of transactions. 
-                        Now based in Edmonton, Canada, George founded Netralis Inc. to bring AI-native intelligence 
-                        to the edge, making large language models accessible on low-cost microcontrollers.
+                        15 years of software engineering experience, including 10 years at 
+                        <strong style="color:#e2e8f0">Ant Group (Alipay)</strong> — one of the 
+                        world's largest fintech platforms, serving over 1 billion users. 
+                        Now building Netralis from Edmonton, Canada, to make AI-native 
+                        intelligence accessible on the cheapest hardware on the planet.
                     </p>
-                    <div class="founder-links">
-                        <a href="https://www.linkedin.com/in/george-guo-2625a01aa/" target="_blank" rel="noopener">LinkedIn ↗</a>
-                        <a href="https://github.com/netralis-inc" target="_blank" rel="noopener">GitHub ↗</a>
-                        <a href="mailto:george@netralis.ca">george@netralis.ca</a>
+                    <div class="about-links">
+                        <a href="https://www.linkedin.com/in/george-guo-2625a01aa/" target="_blank" rel="noopener">
+                            🔗 LinkedIn
+                        </a>
+                        <a href="https://github.com/netralis-inc" target="_blank" rel="noopener">
+                            💻 GitHub
+                        </a>
+                        <a href="mailto:george@netralis.ca">
+                            ✉️ george@netralis.ca
+                        </a>
                     </div>
+                    <ul class="cred-list">
+                        <li>10 years at Ant Group / Alipay — payments infrastructure at global scale</li>
+                        <li>15 years Java, distributed systems, cloud architecture</li>
+                        <li>Based in Edmonton, Alberta, Canada</li>
+                        <li>Incorporated in Canada as Netralis Inc., 2026</li>
+                    </ul>
                 </div>
-            </div>
-            <div class="company-meta">
-                <div class="meta-item">
-                    <span class="label">Company</span>
-                    <span class="value">Netralis Inc.</span>
-                </div>
-                <div class="meta-item">
-                    <span class="label">Founded</span>
-                    <span class="value">2026</span>
-                </div>
-                <div class="meta-item">
-                    <span class="label">Location</span>
-                    <span class="value">Edmonton, Alberta, Canada</span>
-                </div>
-                <div class="meta-item">
-                    <span class="label">Stage</span>
-                    <span class="value">Seed</span>
-                </div>
-                <div class="meta-item">
-                    <span class="label">Focus</span>
-                    <span class="value">Edge AI / IoT</span>
+                <div class="about-right">
+                    <div class="info-card">
+                        <div class="ic-label">Company</div>
+                        <div class="ic-value">Netralis Inc.</div>
+                        <div class="ic-sub">Incorporated in Canada</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="ic-label">Headquarters</div>
+                        <div class="ic-value">Edmonton, Alberta</div>
+                        <div class="ic-sub">Canada 🇨🇦</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="ic-label">Stage</div>
+                        <div class="ic-value">Seed</div>
+                        <div class="ic-sub">Early development · Seeking partners &amp; cloud credits</div>
+                    </div>
+                    <div class="info-card">
+                        <div class="ic-label">Focus</div>
+                        <div class="ic-value">Edge AI / IoT</div>
+                        <div class="ic-sub">Microcontrollers · Voice AI · MCP Protocol</div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CONTACT -->
-    <section id="contact">
-        <div class="section-inner">
-            <div class="section-label">Contact</div>
-            <h2 class="section-title">Let's Talk</h2>
-            <p class="section-sub">
-                Interested in partnering, investing, or building on the Netralis platform? We'd love to hear from you.
-            </p>
-            <div class="contact-box">
-                <a href="mailto:george@netralis.ca" class="btn-primary">george@netralis.ca →</a>
+    <section id="contact" class="padded">
+        <div class="inner">
+            <div class="contact-card">
+                <h3>Let's build together</h3>
+                <p>
+                    Interested in partnering, investing, or bringing Netralis 
+                    to your hardware? We'd love to hear from you.
+                </p>
+                <a href="mailto:george@netralis.ca" class="btn-purple">
+                    Get in Touch →
+                </a>
             </div>
         </div>
     </section>
