@@ -48,6 +48,7 @@
       --radius: 14px;
       --radius-lg: 20px;
       --max: 1100px;
+      --gutter: clamp(1.25rem, 4vw, 3rem);
       --ease: cubic-bezier(.2,.7,.2,1);
     }
 
@@ -66,8 +67,6 @@
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       height: 60px;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 clamp(1.1rem, 4vw, 2.5rem);
       background: rgba(5,5,7,0.55);
       backdrop-filter: blur(16px) saturate(140%);
       -webkit-backdrop-filter: blur(16px) saturate(140%);
@@ -78,6 +77,13 @@
       height: 56px;
       background: rgba(5,5,7,0.78);
       border-bottom-color: var(--border);
+    }
+    .nav-inner {
+      height: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+      display: flex; align-items: center; justify-content: space-between;
     }
     .nav-brand {
       display: flex; align-items: center; gap: 0.5rem;
@@ -121,7 +127,7 @@
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       text-align: center;
-      padding: 7.5rem 1.25rem 5rem;
+      padding: 7.5rem var(--gutter) 5rem;
     }
     /* Radial glow */
     #home::before {
@@ -291,11 +297,13 @@
     /* ─────────── Stats strip ─────────── */
     .stats-strip {
       position: relative;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      padding: 3.25rem clamp(1.25rem, 4vw, 3rem);
+      padding: 3.25rem var(--gutter);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
       max-width: var(--max);
       margin: 0 auto;
     }
@@ -330,7 +338,7 @@
     }
 
     /* ─────────── Section base ─────────── */
-    .sec { padding: 7rem clamp(1.25rem, 4vw, 3rem); position: relative; }
+    .sec { padding: 7rem var(--gutter); position: relative; }
     .wrap { max-width: var(--max); margin: 0 auto; position: relative; }
     .sec-head { margin-bottom: 3.5rem; max-width: 640px; }
     .eyebrow {
@@ -540,11 +548,12 @@
 
     /* ─────────── Footer ─────────── */
     footer {
-      padding: 2.25rem clamp(1.25rem, 4vw, 3rem);
+      padding: 2.25rem var(--gutter);
       text-align: center;
       border-top: 1px solid var(--border);
       font-size: .8rem; color: var(--text-tertiary);
     }
+    .footer-inner { max-width: var(--max); margin: 0 auto; }
     footer a { color: var(--text-tertiary); transition: color .2s var(--ease); }
     footer a:hover { color: var(--text-primary); }
 
@@ -566,14 +575,14 @@
       .bento { grid-template-columns: 1fr 1fr; gap: .85rem; }
       .b1, .b2, .b3, .b4 { grid-column: span 2; }
       .about-layout { grid-template-columns: 1fr; gap: 2.75rem; }
-      .sec { padding: 5.5rem clamp(1.25rem, 4vw, 3rem); }
-      #home { padding: 7rem 1.25rem 4rem; }
+      .sec { padding: 5.5rem var(--gutter); }
+      #home { padding: 7rem var(--gutter) 4rem; }
     }
     @media (max-width: 640px) {
-      .stats-strip {
+      .stats-strip { padding: 2.5rem var(--gutter); }
+      .stats-grid {
         grid-template-columns: 1fr 1fr;
         gap: 2rem 0;
-        padding: 2.5rem 1.25rem;
       }
       .stat:nth-child(3)::before,
       .stat:nth-child(2)::before { display: block; }
@@ -587,9 +596,9 @@
       .terminal-bar .tfile { font-size: .65rem; }
       .contact-card { padding: 3.25rem 1.5rem; }
       .bento-card { padding: 1.5rem; }
-      .sec { padding: 4.5rem 1.25rem; }
+      .sec { padding: 4.5rem var(--gutter); }
       .sec-head { margin-bottom: 2.5rem; }
-      footer { padding: 2rem 1.25rem; line-height: 1.7; }
+      footer { padding: 2rem var(--gutter); line-height: 1.7; }
     }
     @media (max-width: 460px) {
       .bento { grid-template-columns: 1fr; }
@@ -601,12 +610,14 @@
 
 <!-- ─────────── NAV ─────────── -->
 <nav id="nav">
-  <a href="#home" class="nav-brand"><span class="bolt">⚡</span> Netralis</a>
-  <ul class="nav-menu">
-    <li><a href="#features">Features</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="#contact" class="cta-btn">Contact</a></li>
-  </ul>
+  <div class="nav-inner">
+    <a href="#home" class="nav-brand"><span class="bolt">⚡</span> Netralis</a>
+    <ul class="nav-menu">
+      <li><a href="#features">Features</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact" class="cta-btn">Contact</a></li>
+    </ul>
+  </div>
 </nav>
 
 <!-- ─────────── HERO ─────────── -->
@@ -657,21 +668,23 @@
 
 <!-- ─────────── STATS ─────────── -->
 <div class="stats-strip">
-  <div class="stat">
-    <span class="n">&lt;<b>$10</b></span>
-    <span class="l">Target hardware cost</span>
-  </div>
-  <div class="stat">
-    <span class="n"><b>3</b> chips</span>
-    <span class="l">ESP32-S3 · C3 · P4</span>
-  </div>
-  <div class="stat">
-    <span class="n"><b>15</b> yr</span>
-    <span class="l">Engineering experience</span>
-  </div>
-  <div class="stat">
-    <span class="n"><b>1B+</b></span>
-    <span class="l">Users on platforms shipped</span>
+  <div class="stats-grid">
+    <div class="stat">
+      <span class="n">&lt;<b>$10</b></span>
+      <span class="l">Target hardware cost</span>
+    </div>
+    <div class="stat">
+      <span class="n"><b>3</b> chips</span>
+      <span class="l">ESP32-S3 · C3 · P4</span>
+    </div>
+    <div class="stat">
+      <span class="n"><b>15</b> yr</span>
+      <span class="l">Engineering experience</span>
+    </div>
+    <div class="stat">
+      <span class="n"><b>1B+</b></span>
+      <span class="l">Users on platforms shipped</span>
+    </div>
   </div>
 </div>
 
@@ -791,8 +804,10 @@
 
 <!-- ─────────── FOOTER ─────────── -->
 <footer>
-  © 2026 Netralis Inc. · Edmonton, Alberta, Canada ·
-  <a href="mailto:george@netralis.ca">george@netralis.ca</a>
+  <div class="footer-inner">
+    © 2026 Netralis Inc. · Edmonton, Alberta, Canada ·
+    <a href="mailto:george@netralis.ca">george@netralis.ca</a>
+  </div>
 </footer>
 
 <script>
